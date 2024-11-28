@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html><head><title>Geolocation im Ukraine Krieg</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<h1><b>Geolocation zur Dokumentation des Krieges in der Ukraine</b></h1>
+
+<p>1. Einleitung<br/>
+    1.1 Motivation und Zielsetzung der Arbeit<br/>
+    1.2 Methodik und Vorgehensweise<br/></p>
+<p>2. Theoretischer Rahmen<br/>
+    2.1 Was ist Geolocation?<br/>
+    2.2 Nutzung von Geolocation in der Dokumentation von Konflikten<br/>
+    2.3 Relevante Technologien und Tools von Geolocation<br/></p>
+<p>3. Geolocation im Ukraine-Krieg<br/>
+    3.1 &#220;berblick &#252;ber den Ukraine-Krieg<br/>
+    3.2 Rolle von Geolocation bei der Dokumentation des Krieges<br/></p>
+<p>4. Herausforderungen der Geolocation-Dokumentation<br/>
+    4.1 Genauigkeit und Verl&#228;sslichkeit der Geolocation-Daten<br/>
+    4.2 Technische und logistische Hindernisse<br/></p>
+<p>5. Zusammenfassung und Ausblick<br/>
+    5.1 Zusammenfassung der wichtigsten Erkenntnisse<br/>
+    5.2 Ausblick auf zuk&#252;nftige Entwicklungen und Forschungsbereiche<br/></p>
+<p>6. Schlussbemerkungen</p>
+<p>7. Literaturverzeichnis</p>
+<p>8. Abbildungsverzeichnis</p>
+
+<p><b>---</b></p>
+
+<div style="page-break-before:always; page-break-after:always">
+    <h2>1. Einleitung<br/></h2>
+    <h3>1.1 Motivation und Zielsetzung der Arbeit<br/></h3>
+    <p>
+        Kriege sind aus der Vergangenheit, Gegenwart und Zukunft nicht wegzudenken. Sei es<br/>
+        das Verlangen nach Land, reine Machtdemonstration oder der Hass auf andere V&#246;lker,<br/>
+        Kulturen oder Menschen. Krieg ist seit Jahrtausenden das Mittel der Wahl. Krieg<br/>
+        beeinflusst auch die Leben der Menschen die nicht direkt beteiligt sein. Sowohl in den<br/>
+        Bereichen Wirtschaft, aber auch Einwanderung. Es ist deshalb umso wichtiger &#252;ber<br/>
+        Kriege informiert zu sein um sowohl jetzt die richtigen Entscheidungen zu treffen als<br/>
+        auch um zuk&#252;nftige Kriege durch politische Entscheidungen zu verhindern. Doch in<br/>
+        einem Krieg kann es schwierig sein glaubw&#252;rdige Informationen von Propaganda und<br/>
+        Desinformationen zu unterscheiden. Um in der Zukunft aus vergangenen Kriegen zu<br/>
+        lernen ist es au&#223;erdem wichtig die Ereignisse eines Krieges zu dokumentieren damit sie<br/>
+        sp&#228;ter nachvollziehbar sind. OSINT ist schon lange ein verankerter Part f&#252;r die<br/>
+        Gewinnung von Informationen f&#252;r milit&#228;rische Zwecke. Mit dem Aufstieg von<br/>
+        Geolocation im Bereich von OSINT ist es kein Wunder, dass auch Staaten sich die<br/>
+        Methodik aneignen. Da OSINT jedoch viele weitere Bereiche umfasst und den Rahmen<br/>
+        der Arbeit &#252;berschreiten w&#252;rde, wird der Fokus dieser Arbeit auf Geolocation und<br/>
+        dessen Implikationen liegen. Die Arbeit soll deshalb untersuchen welchen Einfluss<br/>
+        Geolocation auf die Dokumentation und die Bek&#228;mpfung von Desinformation und<br/>
+        Propaganda hat und wie Geolocation von Organisationen als auch von Privatpersonen<br/>
+        genutzt wird um Informationen zu &#252;berpr&#252;fen und den Krieg in der Ukraine zu<br/>
+        dokumentieren.<br/>
+    </p>
+    <h3>1.2 Methodik und Vorgehensweise<br/></h3>
+    <p>
+        F&#252;r die Arbeit wurden unterschiedliche, unabh&#228;ngige Quellen analysiert. Die<br/>
+        wichtigsten Erkentnisse werden zusammengefasst dargestellt. Au&#223;erdem wurde eine<br/>
+        Textinterview mit Kodiak gef&#252;hrt. Er ist Teil des Project Owl Discord Server, welcher<br/>
+        von Freiwilligen betrieben wird die sich f&#252;r OSINT und Geolocation Interessierte einen<br/>
+        Platz bietet sich auszutauschen. Dazu ist er Editor f&#252;r die von Project Owl initiierte<br/>
+        Ukraine Control Map, welche unter uacontrolmap.com abrufbar ist und die Frontlinie,<br/>
+        die basierend auf der Arbeit der Freiwilligen des Project Owl Discord Server gesch&#228;tzt <br>
+        wird, darstellt. Au&#223;erdem hat er nach eigenen Angaben mehrere Jahre in einem<br/>
+        &#228;hnlichen Berufsfeld zu OSINT gearbeitet, arbeitet jetzt jedoch als Game Developer,<br/>
+        tr&#228;gt in seiner Freizeit jedoch trotzdem zu den oben genannten Projekten bei. Sein<br/>
+        echter Name wird nicht gennant, da er anonym bleiben m&#246;chte. Um seine Aussagen zu<br/>
+        validieren werden sie im Verlaufe der Arbeit mit den Erkenntnissen aus anderen,<br/>
+        unabh&#228;ngigen Quellen verglichen.
+    </p>
+</div>
+
+<div style="page-break-before:always; page-break-after:always">
+    <h2>2. Theoretischer Rahmen<br/></h2>
+    <h3>2.1 Was ist Geolocation?<br/></h3>
+    <p>
+        Geolocation ist ein Teilbereich von OSINT. OSINT steht dabei f&#252;r<br/>
+        Open-Source-Intelligence. Als Open-Source-Intelligence werden alle Daten bezeichnet,<br/>
+        die &#246;ffentlich verf&#252;gbar sind. Dazu z&#228;hlen Fotos und Videos, Geodaten oder<br/>
+        Zeitungsartikel.[1] Diese k&#246;nnten z.B. auf der Website einer Zeitung oder<br/>
+        Social-Media-Plattformen z.B. Twitter oder Instagram, ver&#246;ffentlicht worden sein.<br/>
+        OSINT umfasst jedoch nicht nur die Daten sondern auch den Prozess der &#8220;Sammlung,<br/>
+        Analyse und Verbreitung von Informationen&#8221;. Dadurch k&#246;nnen neue Daten entstehen,<br/>
+        welche sich OSINT kategorisieren lassen. Damit Daten als OSINT kategorisiert werden<br/>
+        k&#246;nnen m&#252;ssen sie jedoch f&#252;r jeden &#252;ber legale Wege bezogen werden k&#246;nnen. Eine<br/>
+        gestohlene Datenbank d&#252;rfte unter dieser Definition also nicht als OSINT kategorisiert<br/>
+        werden. Ein Social-Media-Post jedoch schon.[2] Dadurch sind alle Daten, die als OSINT<br/>
+        kategorisiert werden, &#252;berpr&#252;fbar und k&#246;nnen von jedem mit einem Zugang zu<br/>
+        Printmedien oder Internet &#252;berpr&#252;ft werden. Auch Kodiak gab eine &#228;hnliche Antwort.<br/>
+        Er erg&#228;nzt, dass es durch die &#220;berpr&#252;fbarkeit der Daten keine Obfuskation gebe.[3]<br/>
+        Geolocation spezialisiert sich dabei auf Geodaten und hat den Zweck der Analyse von<br/>
+        &#246;ffentlichen Daten wie Fotos oder Videos, um zu bestimmen wo und in welchem<br/>
+        Kontext dieses entstanden ist. Somit kann der Standort eines Ereignisses, einer Person<br/>
+        oder eines Gegenstandes ermittelt werden. Nach Kodiak ist Geolocation &#8220;simply finding<br/>
+        out where a video or a picture took place.&#8221; Dazu werden verschiedene Technologien<br/>
+        eingesetzt. Darunter GPS, IP-Addressen und Mobilfunk [4], aber auch einfache<br/>Handarbeit.<br/>
+    </p>
+    <h3>2.2 Nutzung von Geolocation in der Dokumentation von Konflikten<br/></h3>
+    <p>
+        Geolocation kann in Konfliktsituation ein ein hilfreiches Werkzeug sein. Geolocation<br/>
+        wird dabei meist zur Verifizierung von Informationen genutzt. Sowohl von den<br/>
+        Kriegsparteien als auch von Au&#223;enstehenden. So k&#246;nnen Ereignisse einem bestimmten<br/>
+        Standort zugeordnet und sich ein Bild der Lage verschafft werden.[5] Bilder und Videos<br/>
+        m&#252;ssen jedoch auch irgendwo herkommen. Zum Beispiel von Kampflustigen welche<br/>
+        wie in Lakomy (2022) beschrieben immer &#246;fter Social Media nutzen um Kriegsinhalte<br/>
+        zu teilen und ihr Ansehen zu verbessern.[6] Hier kann Geolocation helfen den<br/>
+        Entstehungsort dieser Bilder und Videos zu bestimmen. Das Jahr 2011 sticht als Anfang<br/>
+        der massenhaften Verbreitung kriegsbezogener Daten hervor. Dieses Jahr war vorallem<br/>
+        gepr&#228;gt von den Kriegen in der T&#252;rkei, dem Nahen Osten und Afghanistan. Auch<br/>
+        mehrere afrikanische L&#228;nder befanden sich zu diesem Zeitpunkt im Krieg. Ein Jahr<br/>
+        voller Krieg und Konflikte.[7]<br/>
+    </p>
+    
+    <img src="Abb1.png" alt="Weltkarte der Konflikte" width="600" height="450">
+
+    <p>Mehrere dieser Kriege halten bis heute an und werden durch Geolocation dokumentiert.<br/>
+        Darunter z&#228;hlen die Kriege in Syrien, Libyen und Israel / Pal&#228;stina.[8]<br/>
+        Das Internet wird als Umgebung bezeichnet, welche enorme M&#246;glichkeiten f&#252;r<br/>
+        milit&#228;risch bezogene Informationen bietet.[9] Es wird von einem &#8220;erheblichen Anstieg&#8221;<br/>
+        gesprochen. Eine Organistation welche f&#252;r seine OSINT-Untersuchungen bekannt<br/>
+        geworden ist, ist Bellingcat. Sie f&#252;hrten verschiedenste Untersuchungen durch welche<br/>
+        Informationen &#252;ber die Aktivit&#228;ten gewaltt&#228;tiger extremistischer Organisationen<br/>
+        umfassten.[10] Sie ver&#246;ffenttlichen seither Artikel zu den verschiedensten Konflikten<br/>
+        inklusive dem Ukraine Krieg.[11] Geolocation bietet noch weitere Anwendungsfelder in<br/>
+        Konflikten wie in Lakomy (2022) beschrieben: &#8220;<br/>
+        <ul>
+            <li>Erkennung und Analyse milit&#228;rischer Infrastruktur;</li>
+            <li>Erkennung und Analyse milit&#228;rischer Aufr&#252;stung, einschlie&#223;lich der<br/>
+                Einsch&#228;tzung des gegnerischen Potenzial;</li>
+            <li>&#220;berwachung der laufenden Milit&#228;reins&#228;tze, einschlie&#223;lich der Einsch&#228;tzung der<br/>
+                Kriegsopfer;</li>
+            <li>Geolokalisierung von Truppen auf dem Schlachtfeld.&#8221;[12]</li>
+        </ul>
+        Auch Journalisten &#252;berpr&#252;fen ihre Informationen vermehrt durch OSINT. Laut einem<br/>
+        Interviewten aus Pournis (2023) seien Informationen bereits veraltet, wenn er die<br/>
+        Zeitung lesen w&#252;rde, da sie bereits von Freiwilligen durch OSINT verifiziert oder als<br/>
+        falsch entlarvt wurden.[13]<br/>
+    </p>
+    <h3>2.3 Relevante Technologien und Tools von Geolocation<br/></h3>
+    <p>
+        Wie bereits erw&#228;hnt sind GPS aber auch GIS (Geographic Information System)<br/>
+        wichtige Technologien f&#252;r Geolocation. Jedoch werden noch viele andere wie<br/>
+        Satellitenbilder und digitale Karten genutzt.[14] Der Dienst welcher am meisten in<br/>
+        Fallstudien erw&#228;hnt wird ist Google Maps. Ein digitaler Kartenservice welcher vor<br/>
+        allem durch seine meist aktuellen Satellitenbilder, Luftbilder und Street View ein<br/>
+        wichtigtes Tool geworden ist um heraus zu finden wo ein Bild oder Video entstanden<br/>
+        ist.[15] Andere Alternativen sind Yandex Maps, Wikimapia und Mapillary oder Overpass<br/>
+        Turbo.[16] Der Interviewte gab ebenfalls an, dass Google, Bing und Yandex Maps die<br/>
+        einfachsten Tools f&#252;r Geolocation-Untersuchungen sein.[17] Besonders Overpass Turbo ist<br/>
+        ein aufsteigendes Tool. Nach eigenen Angaben ist es ein &#8220;web-based data filtering tool<br/>
+        for OpenStreetMap.&#8221; OpenStreetMap ist eine &#228;hnliche Datenbank zu Google Maps,<br/>
+        welche von Freiwilligen betrieben und st&#228;ndig erneuert wird. Dadurch bietet es eine<br/>
+        deutliche breitere Menge an kategorisierten Daten wie Briefk&#228;sten und Sitzbanken<br/>
+        welche auf Google Maps nicht auffindbar sind. Overpass Turbo bietet somit einen<br/>
+        Grundbaustein f&#252;r eine Geolocation-Untersuchung und ebenfalls Navigationssystem<br/>
+        Alternativen zu Google Maps wie OsmAnd.[18] Google bietet ebenfalls Google Earth Pro<br/>
+        an. Ein Desktop Programm welches Zugang zu einer erweiterten Version on Google<br/>
+        Earth bietet. Mit den historischen Bilder ist es m&#246;glich sich den selben Ort &#252;ber einen<br/>
+        l&#228;ngeren Zeitraum ansehen. Wie in Pournis (2023) dargelegt kann dies sinnvoll sein um<br/>
+        zu sehen wie sich ein Ort &#252;ber die Zeit ver&#228;ndert hat und dadurch Hinweise auf<br/>
+        m&#246;gliche Ereignisse an diesem Ort gewinnen.[19] Um an Videos zu kommen welche<br/>
+        geolokalisiert werden k&#246;nnen ist aber besonders Social Media wichtig, sagt Kodiak. Er<br/>
+        erg&#228;nzt, dass scheinbar jeder Soldat heutzutage ein Handy dabei habe. Nach ihm sein<br/>
+        sie meist junge Menschen die es m&#246;gen zu posten wo sie sind und was sie tun. So kann<br/>
+        er heraus finden wie sich Truppen bewegen und was auf dem Schlachtfeld passiert.[20] In<br/>
+        anderen Quellen wurde Social Media oft nicht erw&#228;hnt. Dies k&#246;nnte jedoch auch daran<br/>
+        liegen, dass Social Media erst seit dem Anfang des Kriegs in der Ukraine eine so<br/>
+        wichtige Rolle angenommen hat und pr&#228;senter als Bildquelle f&#252;r Geolocation geworden<br/>
+        ist. Doch wie findet jemand &#252;berhaupt heraus wo ein Bild oder Video entstanden ist?<br/>
+        Um den Entstehungsort eines Bildes oder Videos zu ermitteln st&#252;tzen sich Ermittler auf<br/>
+        Indizien und Merkmale des Materials. Dazu z&#228;hlen Geb&#228;ude, die Anordnung von<br/>
+        Stra&#223;en, Fl&#252;ssen, Bergen, milit&#228;rischer Ausr&#252;stung oder Vegetation. Im allgemeinen<br/>
+        visuelle Indikatoren die auf den Entstehungsort hinweisen. So kann es aussehen wenn<br/>
+        ein Ermittler verschieden Indikatoren abgleicht:<br/>
+    </p>
+
+    <img src="Abb2.png" alt="Mother and son killed by the Russian military when their car was sprayed with bullets" width="550" height="300">
+    
+    <p>Ein weiteres Beispiel:<br/></p>
+    
+    <img src="Abb3.png" alt="Ukrainian 36th marines hunting russian drone crews" width="550" height="300">
+
+    <p>Die unterschiedliche farbenen Formen werden auf dem auf Twitter ver&#246;ffentlichten<br/>
+        Fotos und auf den Satellitenbilder, hier Google Earth, eingezeichnet. So kann der Ort<br/>
+        abgeglichen werden um den genauen Entstehungsort des Fotos zu bestimmen.
+    </p>
+</div>
+
+<div style="page-break-before:always; page-break-after:always">
+    <h2>3. Geolocation im Ukraine-Krieg<br/></h2>
+    <h3>3.1 &#220;berblick &#252;ber den Ukraine-Krieg<br/></h3>
+    <p>
+        Am 24. Februar 2022 greift Russland die Ukraine an. &#220;ber den Osten des Landes fallen<br/>
+        Panzer in das Land ein und Russland startet eine Bodenoffensive. All dies nachdem<br/>
+        Russland 2014 die Krim milit&#228;risch annektiert hatte.[21] Das Ziel, nach Putin sei die<br/>
+        &#8220;Denazifizierung&#8221; der Ukraine. Er sagt dazu in einer Ansprache, &#8220;The purpose of this<br/>
+        operation is to protect people who for eight years now have been facing humiliation and<br/>
+        genocide perpetrated by the Kyiv Regime.&#8221; Beweise f&#252;r diese Anschuldigungen<br/>
+        gegen&#252;ber der Ukraine bleiben aus.[22] Seit dem Einmarsch der russischen Truppen<br/>
+        herrscht Terror in der Ukraine und Russland hat w&#228;hrend des Krieges viele<br/>
+        Kriegsverbrechen begangen. Dazu z&#228;hlen Ereignisse wie das Butscha Massaker [23] oder<br/>
+        das Olenivka Prison slaughter welche durch Geolocation nachgewiesen werden<br/>
+        konnten.[24][25] Nachdem Russland Anfangs gro&#223;e Teile der Ost-Ukraine einnehmen<br/>
+        konnte arbeiten Ukrainische Streitkr&#228;fte seit &#252;ber einem Jahr daran diese Gebiete zur&#252;ck<br/>
+        zu erobern und unter ukrainische Kontrolle zu bringen.[26]<br/>
+    </p>
+    <h3>3.2 Rolle von Geolocation bei der Dokumentation des Krieges<br/></h3>
+    <p>
+        Die Abbildung 2 zeigt zum Beispiel die Geolokalisierung des Butscha Massakers.<br/>
+        Geolocation wurde in vielen F&#228;llen genutzt um Kriegsereignisse zu dokumentieren,<br/>
+        besonders im Ukraine Krieg. Diese Dokumentation wird f&#252;r die Analyse und<br/>
+        Berichterstattung genutzt.[27] Es gibt mehrere Projekte die daran arbeiten den Krieg durch<br/>
+        Geolocation zu dokumentieren und kartieren. Ein Beispiel ist &#8220;EyesOnRussia&#8221;, ein<br/>
+        Projekt, welches von Freiwilligen betrieben wird. Es soll als glaubw&#252;rdige<br/>
+        Informationsquelle &#252;ber den Krieg dienen. Ein weiteres Beispiel ist GeoConfirmed, ein<br/>
+        Gruppe aus Freiwilligen mit verschiedenen Hintergr&#252;nden und Fachkenntnissen, welche<br/>
+        daran arbeiten den Ukraine Krieg als auch andere Konflikte wie in Israel oder Syrien zu<br/>
+        kartieren.[28] Teile dieser Arbeit waren bereits in dieser Arbeit zu sehen. Zum Beispiel das<br/>
+        Butscha Massaker und das Olenivka Prison slaughter, welche von GeoConfirmed<br/>
+        bewiesen wurden konnten.[29][30] Kodiak arbeitet selbst an solch einer Karte mit, der<br/>
+        Ukraine Control Map welche unter uacontrolmap.com aufrufbar ist. Er sagt, er w&#252;rde<br/>
+        einfach herausfinden wo ein Bild oder Video entstanden ist, das ganze auf eine Karte<br/>
+        packen und nach 10.000 solcher Punkte w&#252;rde ein Bild enstehen was die Situation<br/>
+        wiederspiegelt und man k&#246;nne auf die Frontlinie und Truppenbewegungen schlie&#223;en.[31]<br/>
+        Er spricht hier also davon, dass es eine gro&#223;e Masse an Punkten braucht um sich ein<br/>
+        verl&#228;ssliches Bild zu machen. Daf&#252;r werden vor allem Social Media Beitr&#228;ge von<br/>
+        Soldaten genutzt um Truppenbewegung oder die eingesetzten Waffen zu identifizieren.[32]<br/>
+        2014 sei es sehr schwierig gewesen Bilder auf Social Media vom Krieg zu finden. Doch<br/>
+        heute gebe es Tausende Menschen welche Informationen &#252;ber den Krieg teilen. Die<br/>
+        Masse an Informationen sei &#252;berw&#228;ltigend zu bearbeiten und zu sortieren.[33] Es h&#228;tte<br/>
+        noch nie so viel Material eines Krieges gegeben wie in der Ukraine.[34] Auf die Frage was<br/>
+        diese Arbeit f&#252;r einen Nutzen hatte antwortete Kodiak er hoffe, dass seine Arbeit helfe<br/>
+        gegen Falschinformationen vorzugehen und L&#252;gen von beiden Seiten des Krieges<br/>
+        entgegen zu stehen. Am Anfang des Krieges habe st&#228;ndig eine Seite etwas gepostet<br/>
+        ohne jegliche Beweise oder ein altes Video mit neuem Titel ver&#246;ffentlicht, aber das<br/>
+        k&#246;nne man durch Geolocation verhindern und Aufkl&#228;rung schaffen.[35] Ein Beispiel daf&#252;r<br/>
+        war ein Ger&#252;cht in den ersten Wochen des Krieges. Man sagte, dass Selenskyj einen<br/>
+        Krankenhausbesuch vorget&#228;uscht h&#228;tte, da die Frau, welche ihn begleitete zu diesem<br/>
+        Zeitpunkt to war. Das Video wurde analysiert und die Frau konnte so identifiziert<br/>
+        werden. Es stellte sich heraus, dass Sie eigentlich Brigadegeneralin war und nichts mit<br/>
+        der verstorbenen Frau zu tun hatte.[36] Geolocation dient also nicht nur dazu<br/>
+        Informationen f&#252;r die Berichterstattung zu gewinnen und Informationen zu &#252;berpr&#252;fen,<br/>
+        sondern auch gegen Desinformationen vorzugehen und ein transparentes Bild des<br/>
+        Krieges zu schaffen. Au&#223;erdem kann es wie in den F&#228;llen des Butscha Massakers und<br/>
+        des Olenivka Prison slaughter daf&#252;r sorgen, dass Kriegsverbrechen aufgedenkt werden<br/>
+        k&#246;nnen und die Verantwortlichen auszumachen. Die Arbeit von &#8220;EyesOnRussia&#8221;,<br/>
+        GeoConfirmed und der Ukraine Control Map dokumentieren den Konflikt also und<br/>
+        bieten uns die M&#246;glichkeit einen Einblick in die Geschenisse an der Front zu erlangen.<br/>
+        Es ist au&#223;erdem durch Karten wie diese m&#246;glich den Fortschritt der ukrainischen<br/>
+        Truppen &#252;ber einen l&#228;ngeren Zeitpunkt zu betrachten.<br/>
+    </p>
+
+    <img src="Abb4.png" alt="Screenshot of Ukraine Time-Lapse February-March 2022" width="275" height="200">
+    <img src="Abb5.png" alt="Screenshot of Ukraine Time-Lapse November 2023" width="275" height="200"> 
+
+    <p>Auf den Karten sind russisch besetze Gebiete rot markiert und ukrainische<br/>
+        Gegenoffensiven blau markiert. Gelb kennzeichnet Gebiete die von russischer Seite als<br/>
+        erorbert angegeben werden.<br/>
+        Ein Vergleich zwischen den zwei Bildern vom 30.03.2022 (links) und dem 30.11.2023<br/>
+        (rechts) zeigt den deutlichen Fortschritt der ukrainischen Streitkr&#228;fte.
+    </p>
+</div>
+
+<div style="page-break-before:always; page-break-after:always">
+    <h2>4. Herausforderungen der Geolocation-Dokumentation<br/></h2>
+    <h3>4.1 Genauigkeit und Verl&#228;sslichkeit der Geolocation-Daten<br/></h3>
+    <p>
+        Die Genauigkeit und Verl&#228;sslichkeit der Daten h&#228;ngt von vielen Faktoren ab und kann<br/>
+        von Fall zu Fall unterschiedlich sein. Ein Fall in dem die ermittelte Position<br/>
+        m&#246;glicherweise ungenau ist k&#246;nnte ein Fall mit zu wenig Anhaltspunkten sein. Ohne<br/>
+        ausreichende visuelle Faktoren k&#246;nnte also keine genaue Aussage &#252;ber den<br/>
+        Entstehungsort des Materials getroffen werden. Au&#223;erdem sollte Bild- und<br/>
+        Videomaterial, dass von Truppen, und damit Konfliktparteien stammt, immer mit<br/>
+        Skepzis betrachtet werden. Es k&#246;nnte sich zum Beispiel wie bereits genannt um<br/>
+        Propaganda oder gestelltes Material handeln. Es k&#246;nnte au&#223;erdem aus dem<br/>
+        Zusammenhang gerissen werden. So wurden in vielen F&#228;llen Videos und Bilder aus<br/>
+        Syrien wiederverwendet und als Bildmaterial aus der Ukraine dargestellt. Letzteres<br/>
+        kann jedoch durch die Bestimmung des Ursprungsortes aufgedenkt werden. Es sollte<br/>
+        deshalb niemals ohne weitere Arbeit auf ein Ursprungsland, anhand der Informationen<br/>
+        au&#223;erhalb des Materials geschlossen werden. Viele setzen daher auf Quellen wie<br/>
+        Satellitenbilder, welche v&#246;llig unabh&#228;ngig von dem Konflikt sind und ein objektiveres<br/>
+        Bild auf die Lage im Kriegsgebiet schaffen.[37] OSINT unterliegt also dem selben<br/>
+        Problem welches es versucht zu bek&#228;mpfen, die weitverbreitete Desinformation im<br/>
+        Internet. Das selbe Problem welches von Freiwilligen von Kodiak bek&#228;mpft wird kann<br/>
+        also zu einer Beeinflussung der Daten f&#252;hren und m&#246;glicherweise mehr<br/>
+        Desinformationen kreieren, wenn der Arbeit anderer ohne unabh&#228;ngige Validierung<br/>
+        vertraut wird.[38] Dieses Risiko sollte also in Betracht auf alle Erkenntnisse nicht nur aus<br/>
+        Geolocation sondern auch aus OSINT beachtet werden, Daten k&#246;nnen im digitalen<br/>
+        Zeitalter einfach beeinflusst werden und es sollte ihnen nicht blind vertraut werden. Um<br/>
+        diese Probleme anzugehen sagt Kodiak deshalb er w&#252;rde seine Ergebnisse<br/>
+        ver&#246;ffentlichen und mit anderen &#252;ber Kan&#228;le wie Discord mit anderen Freiwilligen<br/>
+        teilen damit sie ihn auf seine Fehler aufmerksam machen k&#246;nnen und<br/>
+        Falschinformationen vermieden werden.[39] Ein weiteres Problem ist die von<br/>
+        Konfliktparteien und dessen Unterst&#252;tzern verbreitete Propaganda. Mit dem<br/>
+        Aufkommen sozialer Medien entstand eine neue Plattform f&#252;r weit verbreitete<br/>
+        Propagandakampagnen. Kriegsparteien nutzen diese Plattform oft um ihre politischen<br/>
+        Botschaften zu verbreiten und Desinformationen in eigenem Sinne zu verbreiten.[40] Es<br/>
+        wird vermutet, dass pro-russische Propaganda in Sozialen Medien genutzt wird um<br/>
+        Hass gegen den Westen zu stiften.[41] Insgesamt wurden aus den &#252;ber die pro-russichhenn<br/>
+        Hashtags #istandwithrussia, #standwithrussia, #istandwithputin und #standwithputin<br/>
+        insgesamt 349,355 Nachrichten auf X (ehemals Twitter) gepostet. Dabei wurden ca.<br/>
+        20% der Accounts welche pro-russische Propaganda teilten als Bot eingestuft. Die<br/>
+        Studie kam zu dem Entschluss das dieser Anteil einen erhebliche Rolle in<br/>
+        Propagandakampagnen spielt.[42] Es wurde ebenfalls in erheblichen Ma&#223;e<br/>
+        pro-ukrainische Propaganda verbreitet. Dies belief sich beim Anteil der von Bots<br/>
+        geteilten Nachrichten jedoch nur auf knapp 14%.[43] Diese Masse an Propaganda<br/>
+        erschwert die Arbeit bei Geolocation-Untersuchungen, da nie Sicherheit besteht, dass<br/>
+        das geteilte Bild oder Video nicht Teil einer Propagandakampagne ist. Eine Zeitschrift<br/>
+        namens &#8220;MiddleEastEye&#8221; machte bereits im Februar 2022, 2 Tage nach der Invasion<br/>
+        Russlands auf dieses Problem in einem Artikel aufmerksam. Kriegsbezogene Bilder und<br/>
+        Videos aus Syrien, Libyen, Libanon und Pal&#228;stina wurden auf Twitter geteilt und als aus<br/>
+        der Ukraine stammendes Material betitelt. Ein Beispiel daf&#252;r ist dieses Video aus<br/>
+        Syrien.
+    </p>
+
+    <img src="Abb6.png" alt="Twitter post allegedly showing russian troops at Ukraine Border", width="550" height="575">
+
+    <p>Dieser Twitter Post, welcher inzwischen gel&#246;scht wurde zeigt angeblich russische Truppen<br/>
+        an der ukrainischen Grenze. Der Artikel schreibt: &#8220;Several users replied to his tweet <br/>
+        to clarify that the footage was in fact [...] showing a Syrian government convoy being<br/>
+        destroyed by Turkish Bayraktar TB2 drones.&#8221; Posts wie diese machen es Ermittlern sehr <br/>
+        schwierig glaubw&#252;rdiges Material zu finden und aktiv &#252;ber den Krieg zu informieren.[44]<br/>
+        &#8220;Constantly we see posts [...] claiming utter bullshit getting millions of views, with <br/>
+        the correct geolocation in the comments showing that the initial story was false, but it gets <br/>
+        hundreds of views - a fraction of a percent.&#8221;, sagt Kodiak.[45]
+    </p>
+    <h3>4.2 Technische und logistische Hindernisse<br/></h3>
+    <p>
+        Der gr&#246;&#223;te Teil der Soldaten besitzt Handys, jedoch kann es trotzdem dazu kommen,<br/>
+        dass Ereignisse nicht aufgenommen werden. In Einzelf&#228;llen hat dies keinen gro&#223;en<br/>
+        Einfluss auf das Gesamtbild, muss jedoch auch als m&#246;glicher Verf&#228;lschungsfaktor<br/>
+        betrachtet werden. Es kann dazu kommen, dass Truppen pl&#246;tzlich von Karten<br/>
+        verschwinden, da es einfach keine neuen Aufnahmen von ihnen gibt.[46] Kodiak sagt<br/>
+        ebenfalls, dass es teilweise schwer ist Videomaterial zeitlich einzuordnen, da zwar<br/>
+        bekannt ist, dass etwas geschehen ist, aber nicht wann es geschehen ist. Sein<br/>
+        L&#246;sungsansatz umfasst das manuelle &#252;berpr&#252;fen und cross-refrencing von z.B. Kratern,<br/>
+        Massenabholzung durch Attelerie oder die Jahreszeit um eine bessere Einsch&#228;tzung<br/>
+        &#252;ber das Entstehungsdatum zu gewinnen.[47] Ein weiteres sinnvolles Tool sind in diesem<br/>
+        Fall erneut Sattelitenbilder, da sie unabh&#228;ngig von den Geschehnissen auf dem<br/>
+        Schlachtfeld aufgenommen werden. In Kombination mit Social-Media-Posts kann ein<br/>
+        genaueres Bild entstehen. Er w&#252;nscht sich daher mehr, und einfacher aufrufbare<br/>
+        Satellitenbilder, sch&#228;tzt aber auch das diese mit der Zeit automatisch kommen werden,<br/>
+        indem Raumfahrt h&#228;ufiger und kosteng&#252;nstiger wird.[48] Eine weitere Herausforderung<br/>
+        f&#252;r die OSINT-Community ist au&#223;erdem die gro&#223;e Menge an Menschen, welche am<br/>
+        Diskurs teilnehmen und daher mehr Moderatoren gebraucht werden.[49]<br/>
+        Kommunikationskan&#228;le wie der Project Owl Discord Server, auf dem Kodiak ein<br/>
+        Mitglied ist ben&#246;tigen viel Moderation um einen sachlichen und faktenbasierten Diskurs<br/>
+        zu erm&#246;glichen. In Pournis (2023) wird als weiteres logistisches Hinderniss<br/>
+        angesprochen, dass Russland deutlich besser darin sei Propaganda zu verbreiten als der<br/>
+        Westen sie zu anzugehen und Aufkl&#228;rung zu schaffen. Trotzdem ist der Interviewte Der <br/>
+        Meinung, dass die letzten 10 Jahre ein riesiger Fortschritt f&#252;r OSINT waren und neue<br/>
+        Werkzeuge, Methoden und Ans&#228;tze und mehr Offenheit der Presse und Medien<br/>
+        gegen&#252;ber OSINT gebracht h&#228;tte.[50]
+    </p>
+</div>
+
+<div style="page-break-before:always; page-break-after:always">
+    <h2>5. Zusammenfassung und Ausblick<br/></h2>
+    <h3>5.1 Zusammenfassung der wichtigsten Erkenntnisse<br/></h3>
+    <p>
+        Geolocation hat sich &#252;ber die letzten Jahre rapide entwickelt und Anhalt auch in den<br/>
+        traditionellen Medien gefunden. Es hat sich herausgestellt das Geolocation eine<br/>
+        wichtige Rolle bei der Dokumentation von Konflikten und Verifizierung von<br/>
+        Informationen spielt, inklusive dem Krieg in der Ukraine. Es bietet einen Anhaltspunkt<br/>
+        f&#252;r die Berichterstattung und kann genutzt werden um interaktive Karten zu erstellen die<br/>
+        zur Aufkl&#228;rung &#252;ber die Ereignisse in der Ukraine dienen k&#246;nnen. Dabei sollte jedoch<br/>
+        ebenfalls die Genauigkeit der erhobenen Daten mit einbezogen werden. Probleme wie<br/>
+        Desinformation und Propaganda im Internet oder der Mangel an eindeutigen<br/>
+        Anhaltspunkten kann die erhobenen Daten beeinflussen und verf&#228;lschen. &#220;ber die Zeit<br/>
+        hat sich Geolocation in mehreren Konflikten jedoch als wirksam erwiesen um<br/>
+        Kriegspropaganda zu bek&#228;mpfen. Darunter auch der Krieg in der Ukraine.[51]<br/>
+    </p>
+    <h3>5.2 Ausblick auf zuk&#252;nftige Entwicklungen und Forschungsbereiche<br/></h3>
+    <p>
+        Wie bereits erw&#228;hnt bedarf es weiterer Verbesserung um Geolocation effizienter und<br/>
+        genauer zu machen. Darunter z&#228;hlt der Einfluss auf Informationverbreitung und<br/>
+        Sicherheit.[52] Kodiak nennt mehrere andere Anwendungsf&#228;lle au&#223;erhalb von Kriegen f&#252;r<br/>
+        die Geolocation n&#252;tzlich ist. Er nennt die Verhinderung von Menschenhandel, Smuggel<br/>
+        oder anderen Straftaten. Au&#223;erdem k&#246;nnen Fl&#252;chtlinge oder verlorene Menschen nach<br/>
+        Naturkatastrophen zu lokalisieren und zu retten. Geolocation werde au&#223;erdem bereits<br/>
+        f&#252;r &#8220;targeted advertising&#8221; genutzt. Allein das Aktivieren der Standortfunktion und die<br/>
+        damit verbundene &#220;bermittlung der aktuellen GPS Koordinaten an Firmen wie Google<br/>
+        oder Apple reicht f&#252;r Firmen um in der Zukunft gezielt Werbung f&#252;r L&#228;den in der N&#228;he<br/>
+        anzuzeigen, &#8220;such as you're in a town that has a McDonalds or a Chick-Fil-A, and<br/>
+        suddenly you're getting adverts for those places.&#8221; Au&#223;erdem werde Geolocation benutzt<br/>
+        um Onlinebetrug zu verhindern. Wenn ein Bank Account pl&#246;tzlich aus anderen L&#228;ndern<br/>
+        der Welt probiere etwas zu kaufen, w&#252;rde das einen Alarm ausl&#246;sen und der Benutzer<br/>
+        werde gewarnt, so k&#246;nnen gestohlene Kreditkarten schnell gesperrt werden. F&#252;r die<br/>
+        Zukunft w&#252;nscht sich Kodiak jedoch mehr Social-Media-Regulation. Grund daf&#252;r sei<br/>
+        die bereits erw&#228;hnte h&#228;ufige Verbreitung von Desinformationen. Um auf das Zitat aus<br/>
+        dem Abschnitt 4.1 zur&#252;ck zu kommen. &#8220;We see posts [...] claiming utter bullshit getting<br/>
+        millions of views, with the correct geolocation in the comments [...] , but it gets<br/>
+        hundreds of views - a fraction of a percent.&#8221; Kodiak denkt, dass mehr Regulationen f&#252;r<br/>
+        soziale Medien dieses Problem mindern k&#246;nnten.[53]<br/>
+    </p>
+</div>
+
+<div style="page-break-before:always; page-break-after:always">
+    <h2>6. Schlussbemerkungen<br/></h2>
+    <p>
+        Da Kodiak anonym bleiben m&#246;chte und seinen echten Namen nicht preisgab konnten<br/>
+        keine seiner Aussagen &#252;berpr&#252;ft werden. &#220;ber den Verlauf der Arbeit ist jedoch zu<br/>
+        erkennen, dass ein gro&#223;er Teil seiner Aussagen, in verschiedenen unabh&#228;ngigen Studien<br/>
+        auftaucht mit &#228;hnlicher Formulierung aufttaucht. Beispiele daf&#252;r sind die Tools die<br/>
+        Kodiak aufgez&#228;hlt hat, mit welchen er arbeitet. Google Maps oder Yandex Maps sind<br/>
+        auch in anderen Studien zu finden. Ebenfalls der Fakt, dass Social-Media von<br/>
+        Desinformation geplagt wird ist wiederzuerkennen. Auch ohne Validierung kann<br/>
+        deshalb davon ausgegangen werden, dass der Interviewte ein vertrauensw&#252;rdige Quelle<br/>
+        darstellt.
+    </p>
+</div>
+
+<p><b>---</b></p>
+
+<div style="page-break-before:always; page-break-after:always">
+    <h2>Referenzen</h2>
+    <p>1 Pournis, Stelios: Information Warfare: Assessing the employment of open-source<br/>
+        intelligence (OSINT) in battling disinformation during conflict - The Case Study of the<br/>
+        Russian Invasion of Ukraine, Aristotle University of Thessaloniki, 2023, S.37.
+    </p>
+    <p>2 Hurova, Ana: Earth Observation for the Protection of Human Rights during the Armed<br/>
+        Aggression, <i>Advanced Space Law</i>, Volume 9, 2022, S. 24.
+    </p>
+    <p>3 Kodiak: Interview zum Thema &#8216;Geolocation im Ukraine Krieg&#8217;, 2023, S.1.</p>
+    <p>4 Hwang/Lee/Kim/Donghyun/Lee: Current Status and Security Trend of OSINT,<br/>
+        <i>Wireless Communications and Mobile Computing</i>, 2022, S. 2.
+    </p>
+    <p>5 Hwang et al., 2022, S. 4.</p>
+    <p>6 Lakomy, Miron: Assessing the potential of OSINT on the Internet in supporting<br/>
+        military operations, in: <i>Bezpiecze&#324;stwo. Teoria i Praktyka</i>, 3.Aufl., 2022, S. 300.
+    </p>
+    <p>7 Spiegel: Wo 2011 Kriege tobten, in: spiegel.de, 23.02.2012,<br/>
+        https://www.spiegel.de/fotostrecke/uebersicht-wo-2011-kriege-tobten-fotostrecke-79035.html<br/>
+        [28.12.2023]
+    </p>
+    <p>8 Bellingcat: Bellingcat Geolocation Investigations, in: bellingcat.com,<br/>
+        https://www.bellingcat.com/category/news/?fwp_tags=geolocation [28.12.2023]
+    </p>
+    <p>9 Lakomy, 2022, S. 298.</p>
+    <p>10 Lakomy, 2022, S. 298.</p>
+    <p>11 Bellingcat: Bellingcat Ukraine Investigations, in: bellingcat.com,<br/>
+        https://www.bellingcat.com/category/news/?fwp_tags=ukraine [28.12.2023]</p>
+    <p>12 Lakomy, 2022, S. 301.</p>
+    <p>13 Pournis, 2023, S.16.</p>
+    <p>14 Hwang et al., 2022, S. 6.</p>
+    <p>15 Lakomy, 2022, S. 301.</p>
+    <p>16 Pournis, 2023, S.52.</p>
+    <p>17 Kodiak, 2023, S.1.</p>
+    <p>18 OsmAnd: OsmAnd Offline Maps and Navigation, in: osmand.net, https://osmand.net/<br/>
+        [28.12.2023]
+    </p>
+    <p>19 Pournis, 2023, S.52.</p>
+    <p>20 Kodiak, 2023, S.1.</p>
+    <p>21 Grothe, Lucas: Russland greift Ukraine an - Kampfhandlungen in vielen Landesteilen,<br/>
+        in: mdr.de, 25.02.2022, [online]<br/>
+        https://www.mdr.de/nachrichten/welt/osteuropa/politik/krieg-ukraine-russland-100.html [05.12.2023]
+    </p>
+    <p>22 Treisman, Rachel: Putin&#8217;s claim of fighting against Ukraine &#8216;neo-Nazis&#8217; distorts<br/>
+        history, scholars say, in: npr.org, 01.03.2022, [online]<br/>
+        https://www.npr.org/2022/03/01/1083677765/putin-denazify-ukraine-russia-history [05.12.2023]
+    </p>
+    <p>23 Cosmonaut19: The driver of a Lada was shot and killed crashing into a light post, in:<br/>
+        Geoconfirmed.org, 05.06.2022, [online]<br/>
+        https://geoconfirmed.org/ukraine/e4345f78-c588-4710-f4eb-08db640e0635 [05.12.2023]
+    </p>
+    <p>24 BenDoBrown: New Satellite Imagery shows Olenivka Prison where more than 50<br/>
+        reportdly died following attack at the prison, in: Geoconfirmed.org, 30.07.2022, [online]<br/>
+        https://geoconfirmed.org/ukraine/9166a45b-ce28-4872-0766-08dabc42150c [05.12.2023]
+    </p>
+    <p>25 Kodiak, 2023, S.2.</p>
+    <p>26 Institure for the Study of War: Intertacitve Time-Lapse Russia&#8217;s War in Ukraine, in:<br/>arcgis.com, [online]<br/>https://storymaps.arcgis.com/stories/733fe90805894bfc8562d90b106aa895<br/>[28.12.2023]</p>
+    <p>27 Hwang et al., 2022, S. 10.</p>
+    <p>28 Pournis, 2023, S.15.</p>
+    <p>29 Cosmonaut19, 05.06.2022, [online]<br/>
+        https://geoconfirmed.org/ukraine/e4345f78-c588-4710-f4eb-08db640e0635
+    </p>
+    <p>30 BenDoBrown, 30.07.2022, [online]<br/>
+        https://geoconfirmed.org/ukraine/9166a45b-ce28-4872-0766-08dabc42150c
+    </p>
+    <p>31 Kodiak, 2023, S.1.</p>
+    <p>32 Pournis, 2023, S.23.</p>
+    <p>33 Pournis, 2023, S.38.</p>
+    <p>34 Hurova, 2022, S. 15.</p>
+    <p>35 Kodiak, 2023, S.2.</p>
+    <p>36 Pournis, 2023, S.45.</p>
+    <p>37 Hurova, 2022, S. 24.</p>
+    <p>38 Lakomy, 2022, S. 306-307.</p>
+    <p>39 Kodiak, 2023, S.2.</p>
+    <p>40 Pournis, 2023, S.25.</p>
+    <p>41 Geissler/B&#228;r/Pr&#246;llochs/Feuerriegel: Russian propaganda on social media during the<br/>
+        2022 invasion of Ukraine, <i>EPJ Data Sci., </i>12. Aufl., 2023, S. 1
+    </p>
+    <p>42 Geissler et al., 2023, S. 8</p>
+    <p>43 Geissler et al., 2023, S. 9</p>
+    <p>44 Rayhan Uddin: These videos of the invasion are actually from the Middle East, in:<br/>
+        middleeasteye.net, 25.02.2022, [online]<br/>
+        https://www.middleeasteye.net/news/russia-ukraine-war-videos-misinformation-middle-east <br/>
+        [31.12.2023]
+    </p>
+    <p>45 Kodiak, 2023, S.3.</p>
+    <p>46 Hwang et al., 2022, S. 14.</p>
+    <p>47 Kodiak, 2023, S.2.</p>
+    <p>48 Kodiak, 2023, S.3.</p>
+    <p>49 Pournis, 2023, S.43.</p>
+    <p>50 Pournis, 2023, S.54.</p>
+    <p>51 Pournis, 2023, S.69.</p>
+    <p>52 Hwang et al., 2022, S. 18.</p>
+    <p>53 Kodiak, 2023, S.3.</p>
+</div>    
+
+<p><b>---</b></p>
+
+<div style="page-break-before:always; page-break-after:always">
+    <h2>7. Literaturverzeichnis<br/></h2>
+    <p>
+        [^1]: Hwang/Lee/Kim/Donghyun/Lee: Current Status and Security Trend of OSINT,<br/>
+        <i>Wireless Communications and Mobile Computing</i>, 2022.<br/>
+        [^2]: Hurova, Ana: Earth Observation for the Protection of Human Rights during the<br/>
+        Armed Aggression, <i>Advanced Space Law</i>, Volume 9, 2022.<br/>
+        [^3]: Lakomy, Miron: Assessing the potential of OSINT on the Internet in supporting<br/>
+        military operations, in: <i>Bezpiecze&#324;stwo. Teoria i Praktyka</i>, 3.Aufl., 2022, S. 297-309.<br/>
+        [^4]: Pournis, Stelios: Information Warfare: Assessing the employment of open-source<br/>
+        intelligence (OSINT) in battling disinformation during conflict - The Case Study of the<br/>
+        Russian Invasion of Ukraine, Aristotle University of Thessaloniki, 2023<br/>
+        [^5]: Kodiak: Interview zum Thema &#8216;Geolocation im Ukraine Krieg&#8217;, 2023<br/>
+        [^6]: Grothe, Lucas: Russland greift Ukraine an - Kampfhandlungen in vielen<br/>
+        Landesteilen, in: mdr.de, 25.02.2022,<br/>
+        https://www.mdr.de/nachrichten/welt/osteuropa/politik/krieg-ukraine-russland-100.html<br/>
+        [05.12.2023]<br/>
+        [^7]: Cosmonaut19: The driver of a Lada was shot and killed crashing into a light post,<br/>
+        in: Geoconfirmed.org, 05.06.2022,<br/>
+        https://geoconfirmed.org/ukraine/e4345f78-c588-4710-f4eb-08db640e0635<br/>
+        [05.12.2023]<br/>
+        [^8]: Treisman, Rachel: Putin&#8217;s claim of fighting against Ukraine &#8216;neo-Nazis&#8217; distorts<br/>
+        history, scholars say, in: npr.org, 01.03.2022,<br/>
+        https://www.npr.org/2022/03/01/1083677765/putin-denazify-ukraine-russia-history<br/>
+        [05.12.2023]<br/>[^9]: BenDoBrown: New Satellite Imagery shows Olenivka Prison where more than 50<br/>
+        reportdly died following attack at the prison, in: Geoconfirmed.org, 30.07.2022,<br/>
+        https://geoconfirmed.org/ukraine/9166a45b-ce28-4872-0766-08dabc42150c<br/>
+        [05.12.2023]<br/>[^10]: Spiegel: Wo 2011 Kriege tobten, in: spiegel.de, 23.02.2012,<br/>
+        https://www.spiegel.de/fotostrecke/uebersicht-wo-2011-kriege-tobten-fotostrecke-79035.html [28.12.2023]<br/>
+        [^11]: Bellingcat: Bellingcat Investigations, in: bellingcat.com,<br/>
+        https://www.bellingcat.com/category/news/?fwp_tags=ukraine [28.12.2023]
+        [^12]: Bellingcat: Bellingcat Geolocation Investigations, in: bellingcat.com,<br/>
+        https://www.bellingcat.com/category/news/?fwp_tags=geolocation [28.12.2023]<br/>
+        [^13]: OsmAnd: OsmAnd Offline Maps and Navigation, in: osmand.net,<br/>
+        https://osmand.net/ [28.12.2023]<br/>
+        [^14]: Geissler/B&#228;r/Pr&#246;llochs/Feuerriegel: Russian propaganda on social media during<br/>
+        the 2022 invasion of Ukraine, <i>EPJ Data Sci., </i>12. Aufl., 2023<br/>
+        [^15]: Rayhan Uddin: These videos of the invasion are actually from the Middle East, in:<br/>
+        middleeasteye.net, 25.02.2022, [online]<br/>
+        https://www.middleeasteye.net/news/russia-ukraine-war-videos-misinformation-middle-east [31.12.2023]<br/>
+    </p>
+
+
+    <h2>8. Abbildungsverzeichnis<br/></h2>
+    <p>
+        Abbildung 1: In diesen L&#228;ndern tobten 2011 Kriege, 2012,<br/>
+        https://www.spiegel.de/fotostrecke/uebersicht-wo-2011-kriege-tobten-fotostrecke-79035.html [28.12.2023]<br/>
+        Abbildung 2: Mother and son killed by Russian Military, 2022,<br/>
+        https://twitter.com/Cosmonaut19/status/1665695066118148096 [05.12.2023]<br/>
+        Abbildung 3: Ukrainian 36th marines hunting russian drone crews, 2023,<br/>
+        https://twitter.com/fdov21/status/1738485463000736039 [28.12.2023]<br/>
+        Abbildung 4: Screenshot of Ukraine Time-Lapse February-March 2022, 2022,<br/>
+        https://experience.arcgis.com/experience/c5eeec0f7ce5469ab6fc70176327fb0e/<br/>
+        [28.12.2023]<br/>Abbildung 5: Screenshot of Ukraine Time-Lapse November 2023, 2023,<br/>
+        https://experience.arcgis.com/experience/d55d793102864f848990d50519ee0100<br/>
+        [28.12.2023]<br/>
+        Abbildung 6: Twitter post allegedly showing russian troops at Ukraine Border, 2022,<br/>
+        https://www.middleeasteye.net/sites/default/files/syria%20fake%20ukraine%20video%20screenshot.PNG [31.12.2023]
+    </p>
+</div>
+</body>
+</html>
