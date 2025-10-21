@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Caffeine Sleep Calculator</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 30px auto;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    input, button {
+      padding: 8px;
+      font-size: 1rem;
+    }
+    canvas {
+      max-width: 100%;
+    }
+    header {
+        margin-bottom: 50px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html">← Back to Start</a></h1><br>
+    <h1>Caffeine Sleep Calculator</h1>
+    <p>Find out how long caffeine affects your sleep.</p>
+  </header>
+
+  <main>
+    <form id="form">
+      <label>When did you have caffeine? <input type="time" id="time" required></label>
+      <label>How much caffeine did you have? (mg) <input type="number" id="amount" step="10" required></label>
+      <button type="submit">Submit</button>
+    </form>
+
+    <canvas id="chart_canvas" width="400" height="200"></canvas>
+  </main>
+
+  <footer>
+    <p>© 2025 engag1ng. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("form");
+    const timeInput = document.getElementById("time");
+    const amountInput = document.getElementById("amount");
+    const ctx = document.getElementById("chart_canvas").getContext("2d");
+
+    let chart;
+
+    // --- constants ---
+    const HALF_LIFE = 6; // hours
+    const DECAY_CONST = Math.log(2) / HALF_LIFE;
+
+    function caffeineAtTime(C0, t) {
+      return C0 * Math.exp(-DECAY_CONST * t);
+    }
+
+    // generate 24 hours of data starting at startHour
+    function generateData(C0, startHour) {
+      const labels = [];
+      const values = [];
+
+      for (let t = 0; t <= 24; t++) {
+        // total hours since midnight
+        const totalHours = (startHour + t) % 24;
+
+        // separate into hours and minutes
+        const hours = Math.floor(totalHours);
+        const minutes = Math.round((totalHours - hours) * 60);
+
+        // format as 24-hour time string HH:MM
+        const label = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+        labels.push(label);
+        values.push(caffeineAtTime(C0, t));
+      }
+      return { labels, values };
+    }
+
+    function findBelow50Hour(C0) {
+      let t = 0;
+      while (t <= 24) {
+        if (caffeineAtTime(C0, t) <= 50) return t;
+        t += 0.1;
+      }
+      return null;
+    }
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const C0 = parseFloat(amountInput.value);
+      if (isNaN(C0) || C0 <= 0) return;
+
+      // extract starting hour from time input (HH:MM)
+      const [hourStr, minuteStr] = timeInput.value.split(":");
+      const startHour = parseInt(hourStr) + parseInt(minuteStr) / 60;
+
+      const { labels, values } = generateData(C0, startHour);
+      const below50 = findBelow50Hour(C0);
+
+      // destroy old chart if exists
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Caffeine Level (mg)",
+              data: values,
+              borderColor: "blue",
+              fill: false,
+              tension: 0.3
+            },
+            {
+              label: "Half-life (6h)",
+              data: Array(labels.length).fill(null).map((_, i) => i === 6 ? values[6] : null),
+              pointBackgroundColor: "orange",
+              pointRadius: 6,
+              showLine: false
+            },
+            {
+              label: "Restful sleep (50mg)",
+              data: Array(labels.length).fill(50),
+              borderColor: "red",
+              borderDash: [6, 6],
+              fill: false
+            },
+            {
+              label: "Perfect sleep (10mg)",
+              data: Array(labels.length).fill(10),
+              borderColor: "green",
+              borderDash: [3, 3],
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: "index" },
+          plugins: {
+            title: { display: true, text: `Caffeine decay (started at ${labels[0]}, initial: ${C0} mg)` }
+          },
+          scales: {
+            y: { beginAtZero: true, title: { display: true, text: "Caffeine (mg)" } },
+            x: { title: { display: true, text: "Time (24-hour format)" } }
+          }
+        }
+      });
+
+      form.reset();
+    });
+
+    var timepicker = new TimePicker('time', {
+        lang: 'en',
+        theme: 'dark'
+    });
+    timepicker.on('change', function(evt) {
+    
+    var value = (evt.hour || '00') + ':' + (evt.minute || '00');
+    evt.element.value = value;
+
+    });
+  </script>
+</body>
+</html>
