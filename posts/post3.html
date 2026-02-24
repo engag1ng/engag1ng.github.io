@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARP will get you hacked!</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header>
+    <h1><a href="../index.html">← Back to Start</a></h1>
+  </header>
+
+  <article class="blog-post">
+    <h2>ARP will get you hacked!</h2>
+    <p class="date">February 24, 2026</p>
+
+    <img src="../images/betrayal.png" style="max-width: 100%; border-radius: 8px;" height="200px"/>
+
+    <p>Although the Address Resolution Protocol (ARP) has made enabled networks to effectively communicate internally for almost half a decade, by exploiting it's flaws it also creates a lot of security risks that can lead from simple DoS attacks to full fledged credential fraud, Man-In-The-Middle attacks and privilege escalation.</p>
+
+    <h3>What's ARP?</h3>
+
+    <p>ARP was defined in 1982 in RFC 826 and has since shaped how networks exchange information. Although subnetting makes it seem as though devices purely exchange information based on each others IP address, it is actually their MAC address that identifies them; this is a unique identifier assigned to a devices network interface controller (NIC). Reasonably the question emerges how IP and MAC are linked to translate IP based communication into MAC address whispers. This is where ARP comes into play.</p>
+
+    <p>ARP is a network protocol that translates IP's into MAC's. When a device wants to send a packet to another device it first checks if it's MAC address is already in it's ARP cache. If this is the case, that MAC address is used for communication. If not, the device broadcasts an ARP request, in the form of a packet, to every device in network and asks: "Hey, are you the device with that IP?" If so, that device now responds and says: "Yes, that's me. Here is my MAC address." Every other device just disregards the request. The response is that written to the ARP cache for another time.</p>
+
+    <h3>"Houston, we have a problem..."</h3>
+
+    <p>ARP creates problems for multiple reasons. Firstly, because ARP was created almost half a decade ago, it did not take into consideration what would happen once networks become bigger and accessible to unauthorized users. That is why ARP has absolutely no security features, because it was build on the assumption that only trusted devices would have access to the network in the first place. Secondly, ARP does not require a request to be made before a response is accepted, meaning ARP responses sent at anytime, by anyone. Furthermore, these responses are not verified, allowing attackers to send malicious ARP responses that alter the ARP cache without intervention. Hence, ARP will get you hacked. Because it doesn't just create vulnerabilities, it is one.</p>
+
+    <h4>Denial of Service (DoS)</h4>
+
+    <p>Firstly, handling thousands of packets every second can bring down even the most powerful networks out there. Because ARP can impose itself upon the network, and conveniently broadcasts with the maximum range, without any authorization, attackers can exploit this to send thousands of packets to the network overwhelming switches, routers and devices to bring down a network. Although this might not affect businesses too much in some cases, for big corporations, time is money and if you can't work because your computer is being flooded with a bunch of ARP packets, that prevent anything legit to come through, you're certainly loosing time.</p>
+
+    <h4>Man-In-The-Middle (MITM)</h4>
+
+    <p>More importantly, ARP reponses are not verified which enables attackers to impersonate (spoof) other devices. This allows them to listen in on messages send between clients and the spoofed device, without the client noticing anything. If attackers are willing to go one step further, they could redirect traffic to malicious websites or manipulate flowing traffic. One example of this would be a redirecting users wanting to visit an internal web service to a login page, that looks the same, but is actually controlled by the attacker. If a user enters their credentials on this fake site, the attacker can steal them while still redirecting the user to the real web service, making the attack almost impossible to detect.</p>
+
+    <h3>Solutions</h3>
+
+    <ul>
+      <li>Segmenting the LAN: Splitting up LAN's into smaller VLAN's limits the range of the ARP broadcast reducing the surface of attack</li>
+      <li>Monitor for rapid spikes in ARP traffic or changes in device cache</li>
+      <li>Detect anomalies in the number of ARP requests vs. ARP responses</li>
+    </ul>
+    
+  </article>
+
+  <footer>
+    <p>© 2025 engag1ng</p>
+  </footer>
+</body>
+</html>
