@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alert("XSS detected")</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header>
+    <h1><a href="../index.html">← Back to Start</a></h1>
+  </header>
+
+  <article class="blog-post">
+    <h2>Alert("XSS detected")</h2>
+    <p class="date">April 8, 2026</p>
+
+    <img src="../images/ascii_xss.png" style="max-width: 100%; border-radius: 8px;" height="200px"/>
+    <p>ASCII Art by <a href="https://patorjk.com">https://patorjk.com</a></p>
+    
+    <p>Continuing the trend of OWASP Web security vulnerabilities, we will discuss Cross-Site Scripting (XSS) - how it works, how attackers exploit it 
+      and how to protect web services against XSS. If you haven&#39;t read the last part on SQL injection you can find it 
+      <a href="https://engag1ng.github.io/posts/post4.html">here</a></p>
+    <h1 id="what-is-xss">What is XSS</h1>
+    <p>Put simply, XSS, is the JavaScript equivalent to SQL injection. Instead of executing arbitrary SQL queries we are injecting JavaScript code that 
+      is executed by the victim to reveal some sensitive information like session cookies, passwords or other data accessible to the web browser.</p>
+    <p>XSS occurs when:</p>
+    <ol>
+    <li>Data enters the Web application through an untrusted source, most frequently a web request</li>
+    <li>The data is included in dynamic content that is sent to a web user without being validated for malicious content</li>
+    </ol>
+    <p>XSS can be performed through various different tags with varying complexity but the most common are <code>&lt;script&gt;&lt;/script&gt;</code> 
+      tags, attributes like <code>onload</code> or <code>src</code> attributes on <code>&lt;img&gt;</code> tags. All of the above execute some JavaScript 
+      code and, if HTML input is not sanitised correctly, injected directly into a web page.</p>
+    <p>More advanced XSS payloads will be encoded (i.e. base64, Hex or URL Encoding) and will show more sophisticated evasion techniques to bypass XSS 
+      firewalls or sanitation algorithms. To learn more you can read 
+      <a href="https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html#us-ascii-encoding">this</a> (external link) article.</p>
+    <h1 id="types-of-xss">Types of XSS</h1>
+    <p>XSS comes in different forms that can generally be narrowed down to the following three:</p>
+    <h2 id="reflected-xss">Reflected XSS</h2>
+    <p>This is where the injected script is &quot;reflected&quot; by the web server. Reflected attacks are exploited through other routes such as e-mail 
+      or SMS. When the victim presses a malicious link or visits a malicious site, the injected code is run in the user&#39;s browser. Reflected XSS is 
+      also known as Non-Persistent or Type-I XSS. This means the victim essentially &quot;self-inflicts&quot; the payload.</p>
+    <h2 id="stored-xss">Stored XSS</h2>
+    <p>This is where the injected script is stored on the target servers, such as a database, message forum, visitor log, comment field etc.The victim 
+      retrieves the malicious script when he requests the information. Stored XSS is also known as Persistent or Type-II XSS</p>
+    <h2 id="dom-xss">DOM XSS</h2>
+    <p>The payload is run as a result of modifying the DOM &quot;environment&quot;. This means the payload never reaches the server and is typically 
+      achieved by tricking the victim into clicking a malicious link, that alters the DOM.</p>
+    <h1 id="what-protective-measures-can-you-take-">What protective measures can you take?</h1>
+    <ul>
+      <li>Output encoding</li>
+      <li>HTML Sanitization (for example with DOMPurify)</li>
+      <li>Safe Sinks</li>
+      <li>Use Cookie attributes</li>
+      <li>Use Content Security Policy</li>
+      <li>Use Web Application Firewalls</li>
+    </ul>
+    
+  </article>
+
+  <footer>
+    <p>© 2025 engag1ng</p>
+  </footer>
+</body>
+</html>
